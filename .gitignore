@@ -1,0 +1,8 @@
+
+backend/api_key.py
+backend/config.py
+backend/__pycache__
+backend/instance
+node_modules
+package-lock.json
+package.json
