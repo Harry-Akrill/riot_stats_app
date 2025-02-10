@@ -4,6 +4,7 @@ import GameList from "./GameList";
 import GameForm from "./GameForm";
 import UserGameList from "./UserGameList";
 import "./App.css";
+import GameDetails from "./GameDetails";
 
 function App() {
     const [games, setGames] = useState([]);
@@ -44,7 +45,6 @@ function App() {
             <div>
                 <h1>Game Tracker</h1>
                 <nav>
-                    <Link to="/games">All Games</Link> |{" "}
                     <Link to="/gameform">Add Games</Link>
                 </nav>
                 <h2>User Accounts</h2>
@@ -60,18 +60,7 @@ function App() {
                     <p>No user accounts found.</p>
                 )}
                 <Routes>
-                    <Route
-                        path="/games"
-                        element={
-                            <>
-                                {loading ? (
-                                    <p>Loading games...</p>
-                                ) : (
-                                    <GameList games={games} />
-                                )}
-                            </>
-                        }
-                    />
+                    
                     <Route
                         path="/gameform"
                         element={<GameForm onGameAdded={fetchGames} />}
@@ -80,6 +69,9 @@ function App() {
                         path="/user_games/:accountName"
                         element={<UserGameList />}
                     />
+                     <Route 
+                        path="/games/details/:gameId" element={<GameDetails />} 
+                     />
                 </Routes>
             </div>
         </Router>

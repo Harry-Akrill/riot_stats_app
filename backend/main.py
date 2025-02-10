@@ -27,6 +27,13 @@ def get_unique_accounts():
 
     return jsonify({"accounts": accounts}), 200 
 
+@app.route("/games/details/<int:game_id>", methods=["GET"])
+def get_game_details(game_id):
+    game = Game.query.get(game_id)
+    if not game:
+        return jsonify({"error": "Game not found"}), 404
+    return jsonify(game.to_json())
+
 
 @app.route("/find_games", methods=["POST"])
 def find_games():
