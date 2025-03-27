@@ -48,8 +48,6 @@ const UserGameList = () => {
                     <th>KDA</th>
                     <th>Level</th>
                     <th>Kill Participation</th>
-                    <th>Gold per Minute</th>
-                    <th>Damage per Minute</th>
                     <th>Opponent Champion</th>
                     <th>Opponent Level</th>
                     <th></th>
@@ -73,9 +71,7 @@ const UserGameList = () => {
                             {(game.deaths === 0 ? game.kills + game.assists : ((game.kills + game.assists) / game.deaths).toFixed(2))}
                         </td>
                         <td>{game.champLevel}</td>
-                        <td>{Math.round(game.killParticipation* 100) / 100}</td>
-                        <td>{Math.round(game.goldPerMinute*100) / 100}</td>
-                        <td>{Math.round(game.damagePerMinute)}</td>
+                        <td>{Math.round(game.killParticipation* 100) / 100} %</td>
                         <td><img
                             src={`https://ddragon.leagueoflegends.com/cdn/15.2.1/img/champion/${game.opponentChampion}.png`}
                             alt={game.opponentChampion}

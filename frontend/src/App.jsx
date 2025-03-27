@@ -10,6 +10,7 @@ function App() {
     const [games, setGames] = useState([]);
     const [accounts, setAccounts] = useState([]);
     const [loading, setLoading] = useState(false);
+    const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
     useEffect(() => {
         fetchGames();
@@ -29,6 +30,10 @@ function App() {
         }
     };
 
+    const toggleDropdown = () => {
+        setIsDropdownOpen(!isDropdownOpen);
+    };
+
     const fetchUniqueAccounts = async () => {
         try {
             const response = await fetch("http://127.0.0.1:5000/unique_accounts");
@@ -45,22 +50,28 @@ function App() {
             <div>
                 <h1>Game Tracker</h1>
                 <nav>
+                    <Link to="/" className="link">Home</Link>
                     <Link to="/gameform">Add Games</Link>
+                    <div className="dropdown" onClick={toggleDropdown}>
+                        <span className="dropdown-toggle">
+                            Accounts <span className="caret">&#9660;</span>
+                        </span>
+                        {isDropdownOpen && (
+                            <ul className="dropdown-content">
+                                {accounts.length > 0 ? (
+                                    accounts.map((account) => (
+                                        <li key={account}>
+                                            <Link to={`/user_games/${encodeURIComponent(account)}`}>{account}</Link>
+                                        </li>
+                                    ))
+                                ) : (
+                                    <li>No user accounts found.</li>
+                                )}
+                            </ul>
+                        )}
+                    </div>
                 </nav>
-                <h2>User Accounts</h2>
-                {accounts.length > 0 ? (
-                    <ul>
-                        {accounts.map((account) => (
-                            <li key={account}>
-                                <Link to={`/user_games/${encodeURIComponent(account)}`}>{account}</Link>
-                            </li>
-                        ))}
-                    </ul>
-                ) : (
-                    <p>No user accounts found.</p>
-                )}
                 <Routes>
-                    
                     <Route
                         path="/gameform"
                         element={<GameForm onGameAdded={fetchGames} />}
@@ -69,13 +80,14 @@ function App() {
                         path="/user_games/:accountName"
                         element={<UserGameList />}
                     />
-                     <Route 
-                        path="/games/details/:gameId" element={<GameDetails />} 
-                     />
+                    <Route 
+                        path="/games/details/:gameId" 
+                        element={<GameDetails />} 
+                    />
                 </Routes>
             </div>
         </Router>
     );
-}
+};
 
 export default App;

@@ -77,34 +77,53 @@ def find_lane_opponent_puuid(match_data, player_data):
 def gather_all_data(puuid, role, match_ids, region):
     data = {
         "champion": [],
-        "opponentChampion": [],
         "kills": [],
         "deaths": [],
         "assists": [],
         "win": [],
-        "killParticipation": [],
-        "csdiff14min": [],
-        "jungleCsdiff14": [],
         "turretPlatesTaken": [],
-        "golddiff14min": [],
-        "xpDiff14": [],
         "dmgChamps14": [],
-        "champXpDiff": [],
         "champLevel": [],
-        "opponentChampLevel": [],
-        "goldDiff": [],
         "damageToBuildings": [],
         "goldPerMinute": [],
         "damagePerMinute": [],
         "totalDmgChamps": [],
-        "teamDamagePercentage": [],
         "visionScore": [],
-        "visionScorePerMinute": [],
         "visionWardsBoughtInGame": [],
-        "controlWardsPlaced": [],
-        "wardTakedowns": [],
         "wardsPlaced": [],
-        "completeSupportQuestInTime": []
+        "controlWardsPlaced": [],
+        "completeSupportQuestInTime": [],
+        "killParticipation": [],
+        "visionScorePerMinute": [],
+        "wardTakedowns": [],
+        "teamDamagePercentage": [],
+        "csdiff14min": [],
+        "jungleCsdiff14": [],
+        "golddiff14min": [],
+        "xpDiff14": [],
+        "goldDiff": [],
+        "champXpDiff": [],
+        "opponentChampion": [],
+        "opponentKills": [],
+        "opponentDeaths": [],
+        "opponentAssists": [],
+        "opponentTurretPlatesTaken": [],
+        "opponentDmgChamps14": [],
+        "opponentChampLevel": [],
+        "opponentChampLevel": [],
+        "opponentDamageToBuildings": [],
+        "opponentGoldPerMinute": [],
+        "opponentDamagePerMinute": [],
+        "opponentTotalDmgChamps": [],
+        "opponentVisionScore": [],
+        "opponentVisionWardsBoughtInGame": [],
+        "opponentWardsPlaced": [],
+        "opponentControlWardsPlaced": [],
+        "opponentCompleteSupportQuestInTime": [],
+        "opponentKillParticipation": [],
+        "opponentVisionScorePerMinute": [],
+        "opponentWardTakedowns": [],
+        "opponentTeamDamagePercentage": []
     }
 
     for match_id in match_ids:
@@ -137,26 +156,19 @@ def gather_all_data(puuid, role, match_ids, region):
         stats_at_14 = get_player_stats_at_time(match_timeline, puuid, 14)
         opponent_stats_at_14 = get_player_stats_at_time(match_timeline, opponent_puuid, 14)
 
+        #primary champion
         data["champion"].append(player_data["championName"])
-        data["opponentChampion"].append(opponent_player_data["championName"])
         data["kills"].append(player_data["kills"])
         data["deaths"].append(player_data["deaths"])
         data["assists"].append(player_data["assists"])
         data["win"].append(int(player_data["win"]))
-        data["csdiff14min"].append(stats_at_14["minionsKilled"] - opponent_stats_at_14["minionsKilled"])
         data["turretPlatesTaken"].append(player_data["challenges"]["turretPlatesTaken"])
-        data["golddiff14min"].append(stats_at_14["totalGold"] - opponent_stats_at_14["totalGold"])
-        data["xpDiff14"].append(stats_at_14["xp"] - opponent_stats_at_14["xp"])
         data["dmgChamps14"].append(stats_at_14["damageStats"]["totalDamageDoneToChampions"])
-        data["champXpDiff"].append(player_data["champExperience"] - opponent_player_data["champExperience"])
         data["champLevel"].append(player_data["champLevel"])
-        data["opponentChampLevel"].append(opponent_player_data["champLevel"])
-        data["goldDiff"].append(player_data["goldEarned"] - opponent_player_data["goldEarned"])
         data["damageToBuildings"].append(player_data["damageDealtToBuildings"])
         data["goldPerMinute"].append(player_data["challenges"]["goldPerMinute"])
         data["damagePerMinute"].append(player_data["challenges"]["damagePerMinute"])
         data["totalDmgChamps"].append(player_data["totalDamageDealtToChampions"])
-        data["jungleCsdiff14"].append(stats_at_14["jungleMinionsKilled"] - opponent_stats_at_14["jungleMinionsKilled"])
         data["visionScore"].append(player_data["visionScore"])
         data["visionWardsBoughtInGame"].append(player_data["visionWardsBoughtInGame"])
         data["wardsPlaced"].append(player_data["wardsPlaced"])
@@ -166,6 +178,37 @@ def gather_all_data(puuid, role, match_ids, region):
         data["visionScorePerMinute"].append(player_data["challenges"]["visionScorePerMinute"])
         data["wardTakedowns"].append(player_data["challenges"]["wardTakedowns"])
         data["teamDamagePercentage"].append(player_data["challenges"]["teamDamagePercentage"] * 100)
+
+        #differentials
+        data["csdiff14min"].append(stats_at_14["minionsKilled"] - opponent_stats_at_14["minionsKilled"])
+        data["jungleCsdiff14"].append(stats_at_14["jungleMinionsKilled"] - opponent_stats_at_14["jungleMinionsKilled"])
+        data["golddiff14min"].append(stats_at_14["totalGold"] - opponent_stats_at_14["totalGold"])
+        data["xpDiff14"].append(stats_at_14["xp"] - opponent_stats_at_14["xp"])
+        data["goldDiff"].append(player_data["goldEarned"] - opponent_player_data["goldEarned"])
+        data["champXpDiff"].append(player_data["champExperience"] - opponent_player_data["champExperience"])
+
+        data["opponentChampion"].append(opponent_player_data["championName"])
+        data["opponentChampLevel"].append(opponent_player_data["champLevel"])
+        data["opponentKills"].append(opponent_player_data["kills"])
+        data["opponentDeaths"].append(opponent_player_data["deaths"])
+        data["opponentAssists"].append(opponent_player_data["assists"])
+        data["opponentTurretPlatesTaken"].append(opponent_player_data["challenges"]["turretPlatesTaken"])
+        data["opponentDmgChamps14"].append(opponent_stats_at_14["damageStats"]["totalDamageDoneToChampions"])
+        data["opponentChampLevel"].append(opponent_player_data["champLevel"])
+        data["opponentDamageToBuildings"].append(opponent_player_data["damageDealtToBuildings"])
+        data["opponentGoldPerMinute"].append(opponent_player_data["challenges"]["goldPerMinute"])
+        data["opponentDamagePerMinute"].append(opponent_player_data["challenges"]["damagePerMinute"])
+        data["opponentTotalDmgChamps"].append(opponent_player_data["totalDamageDealtToChampions"])
+        data["opponentVisionScore"].append(opponent_player_data["visionScore"])
+        data["opponentVisionWardsBoughtInGame"].append(opponent_player_data["visionWardsBoughtInGame"])
+        data["opponentWardsPlaced"].append(opponent_player_data["wardsPlaced"])
+        data["opponentControlWardsPlaced"].append(opponent_player_data["challenges"]["controlWardsPlaced"])
+        data["opponentCompleteSupportQuestInTime"].append(opponent_player_data["challenges"]["completeSupportQuestInTime"])
+        data["opponentKillParticipation"].append(opponent_player_data["challenges"]["killParticipation"] * 100)
+        data["opponentVisionScorePerMinute"].append(opponent_player_data["challenges"]["visionScorePerMinute"])
+        data["opponentWardTakedowns"].append(opponent_player_data["challenges"]["wardTakedowns"])
+        data["opponentTeamDamagePercentage"].append(opponent_player_data["challenges"]["teamDamagePercentage"] * 100)
+
 
     print("Data gathered:", data)  # Debug print
     return data

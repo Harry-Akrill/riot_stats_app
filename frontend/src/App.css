@@ -6,7 +6,7 @@
 table {
     width: 100%;
     border-collapse: collapse;
-    min-width: 1200px;
+    min-width: 600px;
 }
 
 th, td {
@@ -48,4 +48,62 @@ h2 {
     th, td {
         padding: 6px;
     }
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+    margin-left: 10px;
+}
+
+.dropdown-toggle {
+    cursor: pointer;
+    padding: 10px;
+    background-color: #f8f9fa;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.caret {
+    font-size: 12px;
+    transition: transform 0.2s;
+}
+
+.dropdown.open .caret {
+    transform: rotate(180deg);
+}
+
+.link {
+    padding-right: 10px;
+}
+
+.dropdown-content {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 2px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    min-width: 160px;
+    margin-top: 5px;
+}
+
+.dropdown-content li {
+    padding: 10px;
+    list-style: none;
+}
+
+.dropdown-content li:hover {
+    background-color: #f1f1f1;
+}
+
+.dropdown-content li a {
+    text-decoration: none;
+    color: #333;
+    display: block;
 }
